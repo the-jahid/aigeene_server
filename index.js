@@ -64,8 +64,9 @@ app.post('/api/text-to-text', async (req, res) => {
     }
 })
 
-app.listen(4001, () => { 
-    console.log(`Server is ready at http://localhost:4001`); 
+const PORT = process.env.PORT || 4001; // Fallback to 4001 if process.env.PORT is not defined
+app.listen(PORT, () => {
+  console.log(`Server is ready at http://localhost:${PORT}`);
 });
 
 
