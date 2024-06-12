@@ -20,6 +20,7 @@
     "express": "^4.19.2",
     "node-fetch": "^3.3.2",
     "nodemon": "^2.0.20",
-    "openai": "^3.1.0"
+    "openai": "^3.1.0",
+    "react-audio-player": "^0.17.0"
   }
 }

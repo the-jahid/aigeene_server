@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import AWS from "aws-sdk";
 import { textToSpeechjs } from "./lib/textTospeech.js";
 import dotenv from 'dotenv';
+import { removeLinksFromText } from "./lib/removeLinikFromText.js";
 dotenv.config({path: './.env.local'});
 
 const app = express();
@@ -39,10 +40,10 @@ app.post('/api/text-to-audio-file', async (req, res) => {
 
         try {
             const response = await query({question:req.body.question});
-            const audioResponse = await textToSpeechjs(language, response.text);
+            const text = removeLinksFromText(response.text);
+            const audioResponse = await textToSpeechjs(language, text);
 
-            console.log('audioresponse', audioResponse);
-
+            
             res.status(200).json({ audioResponse, response });
            
         } catch (error) {
@@ -57,6 +58,9 @@ app.post('/api/text-to-text', async (req, res) => {
 
     try {
         const response = await query({question:req.body.question} );
+
+        console.log('response', response);
+
         res.status(200).json(response)
         
     } catch (error) {
@@ -68,6 +72,7 @@ const PORT = process.env.PORT || 4001; // Fallback to 4001 if process.env.PORT i
 app.listen(PORT, () => {
   console.log(`Server is ready at http://localhost:${PORT}`);
 });
+
 
 
 
